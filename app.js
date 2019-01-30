@@ -6,19 +6,31 @@ const yargs = require('yargs')
 //NOTES.JS MODULE I CREATED
 const notes = require('./notes')
 
+//OPTIONS FOR YARGS AND HELP
+const titleOptions =  {
+    describe: 'Title of note goes here.',
+    demand: true,
+    alias: 't'
+}
+
+const bodyOptions = {
+    describe: "Body of your note goes here.",
+    demand: true,
+    alias: 'b'
+}
+
 // COMMAND-LINE VARIABLE 
 const argv = yargs
     .command('add', 'Add a new note', {
-        title: {
-            describe: 'Title of note goes here.',
-            demand: true,
-            alias: 't'
-        },
-        body: {
-            describe: "Body of your note goes here.",
-            demand: true,
-            alias: 'b'
-        }
+        title: titleOptions,
+        body: bodyOptions
+    })
+    .command('list', 'List all notes')
+    .command('read', "Read a note", {
+        title: titleOptions
+    })
+    .command('remove', "Remove a Note", {
+        title: titleOptions
     })
     .help()
     .argv
