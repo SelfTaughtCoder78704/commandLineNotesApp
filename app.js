@@ -7,7 +7,21 @@ const yargs = require('yargs')
 const notes = require('./notes')
 
 // COMMAND-LINE VARIABLE 
-const argv = yargs.argv
+const argv = yargs
+    .command('add', 'Add a new note', {
+        title: {
+            describe: 'Title of note goes here.',
+            demand: true,
+            alias: 't'
+        },
+        body: {
+            describe: "Body of your note goes here.",
+            demand: true,
+            alias: 'b'
+        }
+    })
+    .help()
+    .argv
 
 let command = argv._[0]
 console.log('Command: ' +command)
@@ -24,7 +38,9 @@ if(command === 'add'){
        console.log('Title already exists')
    }
 }else if (command === 'list'){
-    notes.getAll()
+    let allNotes = notes.getAll()
+    console.log(`Printing ${allNotes.length} note(s)`)
+    console.log(allNotes)
 }else if(command === 'read'){
    let indiNote = notes.readNote(argv.title)
    if(indiNote){
